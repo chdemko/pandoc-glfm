@@ -12,7 +12,7 @@ license = {text = "BSD-3-Clause"}
 license-files = {paths = ["LICENSE"]}
 authors = [{name = "Christophe Demko", email = "chdemko@gmail.com"}]
 maintainers = [{name = "Christophe Demko", email = "chdemko@gmail.com"}]
-keywords = ["pandoc", "filters", "latex", "admonition"]
+keywords = ["pandoc", "filters", "gitlab"]
 # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
 classifiers = [
   # How mature is this project? Common values are
