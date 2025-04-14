@@ -7,7 +7,6 @@ Installation
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://pypi.org/project/black/)
 [![Coveralls](https://img.shields.io/coveralls/github/chdemko/pandoc-glfm/develop.svg?logo=Codecov&logoColor=white)](https://coveralls.io/github/chdemko/pandoc-glfm?branch=develop)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/chdemko/pandoc-glfm.svg?logo=scrutinizer)](https://scrutinizer-ci.com/g/chdemko/pandoc-glfm/)
-[![Code Climate](https://img.shields.io/codeclimate/maintainability/chdemko/pandoc-glfm?logo=codeclimate&barnch=develop)](https://codeclimate.com/github/chdemko/pandoc-glfm/)
 [![CodeFactor](https://img.shields.io/codefactor/grade/github/chdemko/pandoc-glfm/develop.svg?logo=codefactor)](https://www.codefactor.io/repository/github/chdemko/pandoc-glfm)
 [![Codacy](https://img.shields.io/codacy/grade/443f4a26698a4ba0be5064fe9323f2a0.svg?logo=codacy)](https://app.codacy.com/gh/chdemko/pandoc-glfm/dashboard)
 [![PyPI version](https://img.shields.io/pypi/v/pandoc-glfm.svg?logo=pypi&logoColor=white)](https://pypi.org/project/pandoc-glfm/)
@@ -24,7 +23,7 @@ Installation
 [![Source Rank](https://img.shields.io/librariesio/sourcerank/pypi/pandoc-glfm.svg?logo=libraries.io&logoColor=white)](https://libraries.io/pypi/pandoc-glfm)
 [![Docs](https://img.shields.io/readthedocs/pandoc-glfm.svg?logo=read-the-docs&logoColor=white)](http://pandoc-glfm.readthedocs.io/en/latest/)
 
-*pandoc-glfm* is a [pandoc] filter for adding some **G**itlab **F**lavored
+*pandoc-glfm* is a [pandoc] filter for adding some **G**it**L**ab **F**lavored
 **M**arkdown features to pandoc:
 
 * tip (note, tip, important, caution, warning) with title
