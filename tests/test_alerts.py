@@ -242,3 +242,25 @@ class TakssTest(TestCase):
     ~~rest~~
             """.strip()
         )
+
+    def test_tasks_strikeout(self):
+        doc = AlertsTest.conversion(
+            """
+* [ ] Task 1
+* [x] Task 2
+* [~] ~~Task 3~~
+            """,
+        )
+        text = convert_text(
+            doc,
+            input_format="panflute",
+            output_format="markdown",
+        )
+        self.assertEqual(
+            text,
+            """
+-   [ ] Task 1
+-   [x] Task 2
+-   [ ] ~~Task 3~~
+            """.strip()
+        )
