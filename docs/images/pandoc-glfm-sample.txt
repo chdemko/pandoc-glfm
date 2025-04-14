@@ -1,0 +1,20 @@
+---
+# For use with the pandoc-latex-tip and pandoc-latex-admonition filters
+pandoc-latex-admonition:
+  - classes: [warning]
+    color: OrangeRed
+
+pandoc-latex-tip:
+  - classes: [warning]
+    icons: [{name: fa-exclamation-triangle, color: OrangeRed}]
+    position: left
+---
+
+> [!warning] My title
+> My warning
+
+Tasks to do:
+
+* [ ] Task 1
+* [x] Task 2
+* [~] Task 3

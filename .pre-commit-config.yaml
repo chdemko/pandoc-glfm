@@ -1,0 +1,43 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: check-toml
+  - id: check-yaml
+
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.14.0
+  hooks:
+  - id: pretty-format-toml
+    args: [--autofix, --no-sort]
+  - id: pretty-format-yaml
+    args: [--autofix]
+
+- repo: https://github.com/asottile/pyupgrade
+  rev: v3.18.0
+  hooks:
+  - id: pyupgrade
+    args: [--py310-plus]
+
+- repo: local
+  hooks:
+  - id: format
+    name: format
+    entry: hatch fmt --check
+    language: system
+    pass_filenames: false
+  - id: lint
+    name: lint
+    entry: hatch run lint:check
+    language: system
+    pass_filenames: false
+  - id: test
+    name: test
+    entry: hatch test
+    language: system
+    pass_filenames: false
+  - id: lock
+    name: lock
+    entry: uv lock --upgrade
+    language: system
+    pass_filenames: false

@@ -1,0 +1,242 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+dynamic = ["version"]
+name = "pandoc-glfm"
+description = "A pandoc filter for Gitlab Flavored Markdown"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = {text = "BSD-3-Clause"}
+license-files = {paths = ["LICENSE"]}
+authors = [{name = "Christophe Demko", email = "chdemko@gmail.com"}]
+maintainers = [{name = "Christophe Demko", email = "chdemko@gmail.com"}]
+keywords = ["pandoc", "filters", "latex", "admonition"]
+# See https://pypi.python.org/pypi?%3Aaction=list_classifiers
+classifiers = [
+  # How mature is this project? Common values are
+  # 3 - Alpha
+  # 4 - Beta
+  # 5 - Production/Stable
+  "Development Status :: 5 - Production/Stable",
+  # Specify the OS
+  "Operating System :: OS Independent",
+  # Indicate who your project is intended for
+  "Environment :: Console",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Build Tools",
+  "Topic :: Software Development :: Documentation",
+  "Topic :: Text Processing :: Filters",
+  # Specify the Python versions you support here. In particular, ensure
+  # that you indicate whether you support Python 2, Python 3 or both.
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  # Natural language used
+  "Natural Language :: English"
+]
+dependencies = [
+  "panflute~=2.3"
+]
+
+[project.urls]
+Homepage = "https://github.com/chdemko/pandoc-glfm"
+Documentation = "https://pandoc-glfm.readthedocs.io/"
+Repository = "https://github.com/chdemko/pandoc-glfm"
+Issues = "https://github.com/chdemko/pandoc-glfm/issues"
+
+[project.scripts]
+pandoc-glfm = "pandoc_glfm:main"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+version_scheme = "no-guess-dev"
+local_scheme = "no-local-version"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pandoc_glfm"]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.10", "3.11", "3.12", "3.13"]
+
+[tool.hatch.envs.hatch-static-analysis]
+dependencies = [
+  # Types
+  "types-PyYAML~=6.0",
+  # Formatter
+  "black[jupyter]~=25.1",
+  # Style checkers
+  "doc8~=1.1",
+  "mypy~=1.15",
+  "flake8~=7.1",
+  "flake8-pyproject~=1.2",
+  "flake8-annotations-complexity~=0.0",
+  "flake8-black~=0.3",
+  "flake8-blind-except~=0.2",
+  "flake8-bugbear~=24.8",
+  "flake8-builtins~=2.5",
+  "flake8-cognitive-complexity~=0.1",
+  "flake8-comprehensions~=3.15",
+  "flake8-docstrings~=1.7",
+  "flake8-expression-complexity~=0.0",
+  "flake8-fixme~=1.1",
+  "flake8-functions~=0.0",
+  "flake8-import-order~=0.18",
+  "flake8-mypy~=17.8",
+  "flake8-pyi~=24.9",
+  "flake8-pydocstyle~=0.2",
+  "flake8-return~=1.2",
+  "flake8-simplify~=0.21",
+  "flake8-spellcheck~=0.28",
+  "flake8-use-fstring~=1.4",
+  "flake8-variables-names~=0.0",
+  "pep8-naming~=0.14",
+  "darglint~=1.8.1",
+  "pydoclint[flake8]~=0.6",
+  "teyit~=0.4",
+  "refurb~=2.0",
+  "ruff~=0.9"
+]
+
+[tool.hatch.envs.hatch-static-analysis.scripts]
+format-check = [
+  "black --check --diff {args:src docs}",
+  "doc8 -q {args:docs README.md} -e .rst -e .md"
+]
+format-fix = [
+  "black {args:src docs}"
+]
+lint-check = [
+  "refurb {args:src docs}",
+  "ruff check {args:src docs}",
+  "teyit --show-stats --fail-on-change {args:tests}",
+  "flake8 {args:src docs}"
+]
+lint-fix = [
+  "ruff check --fix {args:src docs}"
+]
+
+[tool.hatch.envs.lint]
+dependencies = [
+  "slotscheck~=0.19",
+  "pylint~=3.3"
+]
+
+[tool.hatch.envs.lint.scripts]
+check = [
+  "slotscheck {args:src}",
+  "pylint {args:src}"
+]
+
+[tool.hatch.envs.docs]
+dependencies = [
+  "myst-parser~=4.0",
+  "Sphinx~=8.2",
+  "sphinx-rtd-theme~=3.0",
+  "sphinx-copybutton~=0.5"
+]
+
+[tool.hatch.envs.docs.scripts]
+build = "sphinx-build docs {args:build/sphinx/html}"
+
+[tool.pytest.ini_options]
+consider_namespace_packages = true
+pythonpath = ["src"]
+
+[tool.ruff]
+# Allow lines to be as long as 88.
+line-length = 88
+target-version = "py310"
+
+[tool.flake8]
+# flake8-docstrings
+docstring-convention = "numpy"
+# darglint
+docstring_style = "numpy"
+exclude = "*.pyi"
+ignore = [
+  # class attribute is shadowing a Python builtin
+  "A003",
+  # Cognitive complexity is too high
+  "CCR001",
+  # Function "__init__" has ... arguments that exceeds max allowed 6
+  "CFQ002",
+  # Function attributes has length ... that exceeds max allowed length 100
+  "CFQ001",
+  # Function ... has ... returns that exceeds max allowed 3
+  "CFQ004",
+  # Missing docstring in public method
+  "D105",
+  # One-line docstring should fit on one line with quotes
+  "D200",
+  # The docstring parameter type doesn't match function.
+  "DAR103",
+  # Class docstring contains fewer class attributes than actual class attributes.
+  "DOC601",
+  # Class docstring attributes are different from actual class attributes.
+  "DOC603",
+  # whitespace before ":"
+  "E203",
+  # Expression is too complex
+  "ECE001",
+  # undefined name TODO: remove
+  "F821",
+  # Multi-line construct missing trailing comma
+  "S101",
+  # Spelling error in name (e.g. variable, function, class)
+  "SC200",
+  # SIM119 Use a dataclass for "class ..."
+  "SIM119",
+  # fixme found (TODO)
+  "T101",
+  # Returning Any from function declared to return "..."
+  "T484",
+  # Found ... errors in ... file (checked ... source file)
+  "T499",
+  # variable names that shadow builtins are not allowed
+  "VNE003",
+  # line break before binary operator
+  "W503"
+]
+max-line-length = 88
+statistics = true
+# pydoclint
+arg-type-hints-in-docstring = false
+
+[tool.pydoclint]
+style = "numpy"
+
+[tool.mypy]
+ignore_missing_imports = true
+no_implicit_optional = true
+# equivalent to --strict option
+warn_unused_configs = true
+disallow_any_generics = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+no_implicit_reexport = true
+strict_equality = true
+extra_checks = true
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = "panflute.*"
+
+[tool.pydocstyle]
+convention = "numpy"
+
+[tool.coverage.run]
+source = ["src"]
