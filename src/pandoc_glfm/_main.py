@@ -89,6 +89,7 @@ def task(elem: Element, doc: Doc) -> None:
             if (
                 item.content[0].tag in ("Plain", "Para")
                 and item.content[0].content
+                and item.content[0].content[0].tag == "Str"
                 and item.content[0].content[0].text == "[~]"
                 and len(item.content[0].content) >= 3
             ):
