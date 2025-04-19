@@ -134,12 +134,40 @@ My title
             """.strip()
         )
 
-    def test_blockquote_newline_title(self):
+        def test_blockquote_newline_title(self):
+            doc = AlertsTest.conversion(
+                """
+    > [!note] My title
+    >
+    > **rest**
+                """,
+            )
+            text = convert_text(
+                doc,
+                input_format="panflute",
+                output_format="markdown",
+            )
+            self.assertEqual(
+                text,
+                """
+    :::: note
+    ::: title
+    My title
+    :::
+
+    **rest**
+    ::::
+                """.strip()
+            )
+
+    def test_blockquote_bullet(self):
         doc = AlertsTest.conversion(
             """
 > [!note] My title
+> * **a**
+> * b
 >
-> **rest**
+> * c
             """,
         )
         text = convert_text(
@@ -155,7 +183,9 @@ My title
 My title
 :::
 
-**rest**
+-   **a**
+-   b
+-   c
 ::::
             """.strip()
         )

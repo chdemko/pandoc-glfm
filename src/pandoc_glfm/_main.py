@@ -9,6 +9,7 @@ from panflute import (
     Doc,
     Element,
     Para,
+    Plain,
     Str,
     Strikeout,
     convert_text,
@@ -40,23 +41,84 @@ def alert(elem: Element, doc: Doc) -> Element | None:
         and elem.content[0].content
         and elem.content[0].content[0].tag == "Str"
     ):
+
+        def extract_first_lines(
+            first: list[Element],
+            rest: list[Element],
+        ) -> list[Element]:
+            result = []
+            for item in first:
+                if item.tag == "Str":
+                    result.append(item.text)
+                elif item.tag == "SoftBreak":
+                    result.append("\n")
+                elif item.tag == "Space":
+                    result.append(" ")
+                else:
+                    result.append(
+                        convert_text(
+                            Plain(item),
+                            input_format="panflute",
+                            output_format="markdown",
+                        ),
+                    )
+            for item in rest:
+                result.extend(
+                    [
+                        "\n",
+                        convert_text(
+                            item,
+                            input_format="panflute",
+                            output_format="markdown",
+                        ),
+                    ]
+                )
+
+            return convert_text("".join(result))
+
         text = elem.content[0].content[0].text.lower()
         if text in ("[!note]", "[!tip]", "[!important]", "[!caution]", "[!warning]"):
+            # Case
+            #
+            # > [!tip]
+            #
+            # and
+            #
+            # > [!tip]
+            # >
+            # > Rest of text
             if len(elem.content[0].content) == 1:
-                title = Div(Para(Str(text[2:-1].capitalize)), classes=["title"])
+                title = Div(Para(Str(text[2:-1].capitalize())), classes=["title"])
                 content = [*elem.content[1:]]
+            # Case
+            #
+            # > [!tip]
+            # > Rest of text
             elif elem.content[0].content[1].tag == "SoftBreak":
-                title = Div(Para(Str(text[2:-1].capitalize)), classes=["title"])
-                content = [Para(*elem.content[0].content[2:]), *elem.content[1:]]
+                title = Div(Para(Str(text[2:-1].capitalize())), classes=["title"])
+                content = extract_first_lines(
+                    elem.content[0].content[2:],
+                    elem.content[1:],
+                )
+            # Case
+            #
+            # > [!tip] title
+            # > Rest of text
+            #
+            # and
+            #
+            # > [!tip] title
+            # >
+            # > Rest of text
             else:
                 alternate = []
                 for index in range(2, len(elem.content[0].content)):
                     if elem.content[0].content[index].tag == "SoftBreak":
                         title = Div(Para(*alternate), classes=["title"])
-                        content = [
-                            Para(*elem.content[0].content[index:]),
-                            *elem.content[1:],
-                        ]
+                        content = extract_first_lines(
+                            elem.content[0].content[index:],
+                            elem.content[1:],
+                        )
                         break
                     alternate.append(elem.content[0].content[index])
                 else:
