@@ -189,6 +189,37 @@ def remove_strikeout(elems: list[Element]) -> list[Element]:
     return result
 
 
+def cell(elem: Element, doc: Doc) -> None:
+    """
+    Transfom cell elements that contain <br />.
+
+    Parameters
+    ----------
+        The current element
+    doc
+        The pandoc document
+
+    """
+    if elem.tag == "TableCell":
+        convert = False
+        for index, item in enumerate(elem.content[0].content):
+            if (
+                item.tag == "RawInline"
+                and item.format == "html"
+                and item.text in ("<br>", "<br/>", "<br />")
+            ):
+                convert = True
+                elem.content[0].content[index] = Str("\n")
+
+        if convert:
+            text = convert_text(
+                elem.content[0],
+                input_format="panflute",
+                output_format="markdown",
+            )
+            elem.content = convert_text(text)
+
+
 def main(doc: Doc | None = None) -> Doc:
     """
     Convert the pandoc document.
@@ -203,7 +234,7 @@ def main(doc: Doc | None = None) -> Doc:
     Doc
         The modified pandoc document
     """
-    return run_filters([alert, task], doc=doc)
+    return run_filters([alert, task, cell], doc=doc)
 
 
 if __name__ == "__main__":

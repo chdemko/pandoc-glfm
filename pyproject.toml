@@ -72,7 +72,7 @@ dependencies = [
   "black[jupyter]~=25.1",
   # Style checkers
   "doc8~=1.1",
-  "mypy~=1.15",
+  "mypy~=1.16",
   "flake8~=7.1",
   "flake8-pyproject~=1.2",
   "flake8-annotations-complexity~=0.0",
@@ -100,7 +100,7 @@ dependencies = [
   "pydoclint[flake8]~=0.6",
   "teyit~=0.4",
   "refurb~=2.0",
-  "ruff~=0.9"
+  "ruff~=0.11"
 ]
 
 [tool.hatch.envs.hatch-static-analysis.scripts]
