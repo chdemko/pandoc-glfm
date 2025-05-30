@@ -15,7 +15,7 @@ Installation
 [![Downloads](https://img.shields.io/pypi/dm/pandoc-glfm?logo=pypi&logoColor=white)](https://pepy.tech/project/pandoc-glfm)
 [![Development Status](https://img.shields.io/pypi/status/pandoc-glfm.svg?llogo=pypi&logoColor=white)](https://pypi.org/project/pandoc-glfm/)
 [![Python version](https://img.shields.io/pypi/pyversions/pandoc-glfm.svg?logo=Python&logoColor=white)](https://pypi.org/project/pandoc-glfm/)
-[![Pandoc version](https://img.shields.io/badge/pandoc-3.1%20..%203.6-blue.svg?logo=markdown)](https://pandoc.org/)
+[![Pandoc version](https://img.shields.io/badge/pandoc-3.1%20..%203.7-blue.svg?logo=markdown)](https://pandoc.org/)
 [![Latest release](https://img.shields.io/github/release-date/chdemko/pandoc-glfm.svg?logo=github)](https://github.com/chdemko/pandoc-glfm/releases)
 [![Last commit](https://img.shields.io/github/last-commit/chdemko/pandoc-glfm/develop?logo=github)](https://github.com/chdemko/pandoc-glfm/commit/develop/)
 [![Repo Size](https://img.shields.io/github/repo-size/chdemko/pandoc-glfm.svg?logo=github)](http://pandoc-glfm.readthedocs.io/en/latest/)

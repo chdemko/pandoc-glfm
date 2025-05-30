@@ -195,6 +195,7 @@ def cell(elem: Element, doc: Doc) -> None:
 
     Parameters
     ----------
+    elem
         The current element
     doc
         The pandoc document
