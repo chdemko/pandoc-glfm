@@ -201,7 +201,7 @@ def cell(elem: Element, doc: Doc) -> None:
         The pandoc document
 
     """
-    if elem.tag == "TableCell":
+    if elem.tag == "TableCell" and elem.content:
         convert = False
         for index, item in enumerate(elem.content[0].content):
             if (

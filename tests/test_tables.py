@@ -15,13 +15,13 @@ class TableTest(TestCase):
         pandoc_glfm.main(doc)
         return doc
 
-    def test_blockquote_empty(self):
+    def test_table(self):
         doc = TableTest.conversion(
             """
 | Name | Details |
 | ---  | ---     |
 | Item1 | This text is on one line |
-| Item2 | This item has:<br><br>- Multiple items<br>- That we want listed separately |
+|       | This item has:<br><br>- Multiple items<br>- That we want listed separately |
             """,
         )
         text = convert_text(
@@ -39,7 +39,7 @@ class TableTest(TestCase):
 +===================================+===================================+
 | Item1                             | This text is on one line          |
 +-----------------------------------+-----------------------------------+
-| Item2                             | This item has:                    |
+|                                   | This item has:                    |
 |                                   |                                   |
 |                                   | -   Multiple items                |
 |                                   | -   That we want listed           |
@@ -57,7 +57,7 @@ class TableTest(TestCase):
 +===================================+===================================+
 | Item1                             | This text is on one line          |
 +-----------------------------------+-----------------------------------+
-| Item2                             | This item has:                    |
+|                                   | This item has:                    |
 |                                   |                                   |
 |                                   | - Multiple items                  |
 |                                   | - That we want listed separately  |
