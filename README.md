@@ -42,7 +42,7 @@ Installation
   | Name | Details |
   | ---  | ---     |
   | Item1 | This text is on one line |
-  | Item2 | This item has:<br><br>- Multiple items<br>- That we want listed separately |
+  |       | This item has:<br><br>- Item2<br>- Item3 |
   ~~~
 
 [pandoc]: http://pandoc.org/
