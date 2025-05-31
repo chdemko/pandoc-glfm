@@ -37,6 +37,13 @@ Installation
   * [ ] To do task
   * [~] Disabled task
   ~~~
+* tables using the `<br>` line separator
+  ~~~markdown
+  | Name | Details |
+  | ---  | ---     |
+  | Item1 | This text is on one line |
+  | Item2 | This item has:<br><br>- Multiple items<br>- That we want listed separately |
+  ~~~
 
 [pandoc]: http://pandoc.org/
 

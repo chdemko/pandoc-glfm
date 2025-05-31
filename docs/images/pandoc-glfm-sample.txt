@@ -18,3 +18,8 @@ Tasks to do:
 * [ ] Task 1
 * [x] Task 2
 * [~] Task 3
+
+| Name | Details |
+| ---  | ---     |
+| Item1 | This text is on one line |
+| Item2 | This item has:<br><br>- Multiple items<br>- That we want listed separately |
