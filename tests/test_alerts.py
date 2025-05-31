@@ -1,7 +1,10 @@
 from unittest import TestCase
 
 from panflute import convert_text
+from panflute.tools import PandocVersion
 import pandoc_glfm
+
+version = PandocVersion().version
 
 
 class AlertsTest(TestCase):
@@ -174,9 +177,25 @@ My title
             input_format="panflute",
             output_format="markdown",
         )
-        self.assertEqual(
-            text,
-            """
+        if version < (3, 6, 4):
+            self.assertEqual(
+                text,
+                """
+:::: note
+::: title
+My title
+:::
+
+-   **a**
+-   b
+-   c
+::::
+                """.strip()
+            )
+        else:
+            self.assertEqual(
+                text,
+                """
 :::: note
 ::: title
 My title
@@ -186,7 +205,5 @@ My title
 - b
 - c
 ::::
-            """.strip()
-        )
-
-
+                """.strip()
+            )

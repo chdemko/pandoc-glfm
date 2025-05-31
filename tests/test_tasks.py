@@ -1,7 +1,10 @@
 from unittest import TestCase
 
 from panflute import convert_text
+from panflute.tools import PandocVersion
 import pandoc_glfm
+
+version = PandocVersion().version
 
 
 class TakssTest(TestCase):
@@ -26,14 +29,24 @@ class TakssTest(TestCase):
             input_format="panflute",
             output_format="markdown",
         )
-        self.assertEqual(
-            text,
-            """
+        if version < (3, 6, 4):
+            self.assertEqual(
+                text,
+                """
+-   [ ] Task 1
+-   [x] Task 2
+-   [ ] ~~Task 3~~
+                """.strip()
+            )
+        else:
+            self.assertEqual(
+                text,
+                """
 - [ ] Task 1
 - [x] Task 2
 - [ ] ~~Task 3~~
-            """.strip()
-        )
+                """.strip()
+            )
 
     def test_tasks_softbreak(self):
         doc = self.conversion(
@@ -49,13 +62,24 @@ class TakssTest(TestCase):
             input_format="panflute",
             output_format="markdown",
         )
-        self.assertEqual(
-            text,
-            """
+
+        if version < (3, 6, 4):
+            self.assertEqual(
+                text,
+                """
+-   [ ] Task 1
+-   [x] Task 2
+-   [ ] ~~Task 3 rest~~
+                """.strip()
+            )
+        else:
+            self.assertEqual(
+                text,
+                """
 - [ ] Task 1
 - [x] Task 2
 - [ ] ~~Task 3 rest~~
-            """.strip()
+                """.strip()
         )
 
     def test_tasks_linebreak(self):
@@ -68,14 +92,30 @@ class TakssTest(TestCase):
   rest
             """,
         )
+
         text = convert_text(
             doc,
             input_format="panflute",
             output_format="markdown",
         )
-        self.assertEqual(
-            text,
-            """
+
+        if version < (3, 6, 4):
+            self.assertEqual(
+                text,
+                """
+-   [ ] Task 1
+
+-   [x] Task 2
+
+-   [ ] ~~Task 3~~
+
+    ~~rest~~
+                """.strip()
+            )
+        else:
+            self.assertEqual(
+                text,
+                """
 - [ ] Task 1
 
 - [x] Task 2
@@ -83,7 +123,7 @@ class TakssTest(TestCase):
 - [ ] ~~Task 3~~
 
   ~~rest~~
-            """.strip()
+                """.strip()
         )
 
     def test_tasks_strikeout(self):
@@ -99,11 +139,22 @@ class TakssTest(TestCase):
             input_format="panflute",
             output_format="markdown",
         )
-        self.assertEqual(
-            text,
-            """
+
+        if PandocVersion().version < (3, 6, 4):
+            self.assertEqual(
+                text,
+                """
+-   [ ] Task 1
+-   [x] Task 2
+-   [ ] ~~Task 3~~
+                """.strip()
+            )
+        else:
+            self.assertEqual(
+                text,
+                """
 - [ ] Task 1
 - [x] Task 2
 - [ ] ~~Task 3~~
-            """.strip()
-        )
+                """.strip()
+            )

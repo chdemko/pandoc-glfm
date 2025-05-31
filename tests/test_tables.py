@@ -1,7 +1,10 @@
 from unittest import TestCase
 
 from panflute import convert_text
+from panflute.tools import PandocVersion
 import pandoc_glfm
+
+version = PandocVersion().version
 
 
 class TableTest(TestCase):
@@ -26,9 +29,29 @@ class TableTest(TestCase):
             input_format="panflute",
             output_format="markdown",
         )
-        self.assertEqual(
-            text,
-            """
+
+        if version < (3, 6, 4):
+            self.assertEqual(
+                text,
+                """
++-----------------------------------+-----------------------------------+
+| Name                              | Details                           |
++===================================+===================================+
+| Item1                             | This text is on one line          |
++-----------------------------------+-----------------------------------+
+| Item2                             | This item has:                    |
+|                                   |                                   |
+|                                   | -   Multiple items                |
+|                                   | -   That we want listed           |
+|                                   |     separately                    |
++-----------------------------------+-----------------------------------+
+                  """.strip()
+            )
+
+        else:
+            self.assertEqual(
+                text,
+                """
 +-----------------------------------+-----------------------------------+
 | Name                              | Details                           |
 +===================================+===================================+
@@ -39,6 +62,5 @@ class TableTest(TestCase):
 |                                   | - Multiple items                  |
 |                                   | - That we want listed separately  |
 +-----------------------------------+-----------------------------------+
-              """.strip()
-        )
-
+                  """.strip()
+            )
