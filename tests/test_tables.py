@@ -1,7 +1,6 @@
 from unittest import TestCase
 
-from panflute import convert_text, Para, Image, Figure, debug
-
+from panflute import convert_text
 import pandoc_glfm
 
 
@@ -37,9 +36,8 @@ class TableTest(TestCase):
 +-----------------------------------+-----------------------------------+
 | Item2                             | This item has:                    |
 |                                   |                                   |
-|                                   | -   Multiple items                |
-|                                   | -   That we want listed           |
-|                                   |     separately                    |
+|                                   | - Multiple items                  |
+|                                   | - That we want listed separately  |
 +-----------------------------------+-----------------------------------+
               """.strip()
         )
